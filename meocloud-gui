@@ -27,31 +27,31 @@ try:
     if isinstance(keyring.get_keyring(), EncryptedKeyring):
         keyring.set_keyring(PlaintextKeyring())
 except ImportError:
-    print "Keyring unavailable. Please install python-keyring."
+    print ("Keyring unavailable. Please install python-keyring.")
     sys.exit(1)
 
 try:
     import thrift
 except ImportError:
-    print "Thrift unavailable. Please install python-thrift."
+    print ("Thrift unavailable. Please install python-thrift.")
     sys.exit(1)
 
 try:
     from dbus.mainloop.glib import DBusGMainLoop
 except ImportError:
-    print "D-Bus unavailable. Please install dbus-python."
+    print ("D-Bus unavailable. Please install dbus-python.")
     sys.exit(1)
 
 try:
     from gi.repository import Gtk, GLib, Gdk
 except ImportError:
-    print "GTK is required. Please install GTK+ 3 with the GIR bindings."
+    print ("GTK is required. Please install GTK+ 3 with the GIR bindings.")
     sys.exit(1)
 
 try:
     from gi.repository import Notify
 except ImportError:
-    print "Notify is required. Please install the Notify GIR bindings."
+    print ("Notify is required. Please install the Notify GIR bindings.")
     sys.exit(1)
 
 from meocloud_gui.application import Application

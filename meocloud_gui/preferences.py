@@ -1,6 +1,7 @@
-import ConfigParser
+import configparser
 import os
 import errno
+import stat
 
 from meocloud_gui.constants import UI_CONFIG_PATH
 
@@ -9,13 +10,13 @@ class Preferences(object):
     def __init__(self):
         self.path = os.path.join(UI_CONFIG_PATH, 'prefs.ini')
         self._set_permissions()
-        self.config = ConfigParser.ConfigParser()
+        self.config = configparser.ConfigParser()
         self.creds = None
         self._load()
 
     def _set_permissions(self):
         try:
-            os.chmod(self.path, 0600)
+            os.chmod(self.path, stat.S_IREAD + stat.S_IWRITE) # 0600)
         except OSError:
             pass
 
@@ -27,7 +28,7 @@ class Preferences(object):
 
     def save(self):
         self._set_permissions()
-        for i in xrange(2):
+        for i in range(2):
             try:
                 prefsfile = open(self.path, 'wb')
             except EnvironmentError as enve:
@@ -44,7 +45,7 @@ class Preferences(object):
         try:
             val = self.config.get(section, option)
             return val if val is not None else default
-        except ConfigParser.Error:
+        except configparser.Error:
             return default
 
     def put(self, section, option, val):
@@ -55,5 +56,5 @@ class Preferences(object):
     def remove(self, section, option):
         try:
             self.config.remove_option(section, option)
-        except ConfigParser.NoSectionError:
+        except configparser.NoSectionError:
             pass

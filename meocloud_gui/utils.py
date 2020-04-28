@@ -3,7 +3,7 @@ import sys
 import base64
 import os
 import math
-import urlparse
+import urllib.parse
 import urllib
 import logging
 import logging.handlers
@@ -11,6 +11,7 @@ import shutil
 import dbus
 import hashlib
 import hmac
+import stat
 
 from contextlib import contextmanager
 from functools import partial
@@ -71,14 +72,14 @@ def create_required_folders(prefs):
 
     if not os.path.exists(cloud_home):
         os.makedirs(cloud_home)
-        os.chmod(cloud_home, 0700)
+        os.chmod(cloud_home, stat.S_IRWXU) # 0700)
         purge_meta()
     if not os.path.exists(CONFIG_PATH):
         os.makedirs(CONFIG_PATH)
-        os.chmod(CONFIG_PATH, 0700)
+        os.chmod(CONFIG_PATH, stat.S_IRWXU) # 0700)
     if not os.path.exists(UI_CONFIG_PATH):
         os.makedirs(UI_CONFIG_PATH)
-        os.chmod(UI_CONFIG_PATH, 0700)
+        os.chmod(UI_CONFIG_PATH, stat.S_IRWXU) # 0700)
 
 
 def clean_cloud_path(prefs):
